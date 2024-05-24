@@ -49,7 +49,7 @@ func Session(r *ghttp.Request) {
 	sessionJson.Dump()
 
 	detail := sessionJson.Get("detail").String()
-	if gstr.Contains(detail, "RefreshAccessTokenError") {
+	if gstr.Contains(detail, "RefreshAccessTokenError") || gstr.Contains(detail, "Unauthorized") {
 		utility.CloseCar(ctx, carid)
 		r.Response.Status = 401
 		r.Response.WriteJson(gjson.New(errSessionStr))
